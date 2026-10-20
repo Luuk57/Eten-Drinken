@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eten & Drinken Monitor</title>
-    <!-- Tailwind CSS voor modern design -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome voor iconen -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,7 +32,6 @@
                 <p id="current-date" class="text-xs text-blue-100"></p>
             </div>
             <div class="flex items-center gap-2">
-                <!-- Google Sync Status -->
                 <button onclick="loadFromGoogle()" id="sync-btn" class="bg-white/20 hover:bg-white/30 text-white text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                     <i class="fa-brands fa-google text-sm"></i> <span id="sync-text">Laden...</span>
                 </button>
@@ -46,7 +45,7 @@
     <!-- Main Container -->
     <main class="max-w-md mx-auto p-4 space-y-6">
 
-        <!-- Dagelijks Overzicht / Samenvatting -->
+        <!-- Dagelijks Overzicht -->
         <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
             <h2 class="text-sm font-semibold text-slate-500 mb-3 uppercase tracking-wider">Voortgang Vandaag</h2>
             <div class="grid grid-cols-3 gap-3 text-center">
@@ -81,41 +80,19 @@
         <!-- TAB 1: DRINKEN -->
         <div id="tab-content-drink" class="space-y-4">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4">
-                <h3 class="font-semibold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-blue-500"></i> Snelle Drink-toetsen
-                </h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="addEntry('drink', 'Water', 250, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-glass-water"></i></span>
-                        <div>
-                            <span class="block font-semibold text-sm text-slate-800">Glas Water</span>
-                            <span class="text-xs text-slate-500">250 ml</span>
-                        </div>
-                    </button>
-                    <button onclick="addEntry('drink', 'Koffie / Thee', 200, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-lg"><i class="fa-solid fa-mug-hot"></i></span>
-                        <div>
-                            <span class="block font-semibold text-sm text-slate-800">Koffie / Thee</span>
-                            <span class="text-xs text-slate-500">200 ml</span>
-                        </div>
-                    </button>
-                    <button onclick="addEntry('drink', 'Frisdrank', 300, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bottle-water"></i></span>
-                        <div>
-                            <span class="block font-semibold text-sm text-slate-800">Frisdrank</span>
-                            <span class="text-xs text-slate-500">300 ml</span>
-                        </div>
-                    </button>
-                    <button onclick="addEntry('drink', 'Soep / Bouillon', 250, 1.5, 2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bowl-food"></i></span>
-                        <div>
-                            <span class="block font-semibold text-sm text-slate-800">Soep</span>
-                            <span class="text-xs text-slate-500">250 ml (+zout)</span>
-                        </div>
-                    </button>
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-blue-500"></i> Snelle Drink-toetsen
+                    </h3>
+                    <button onclick="openManageQuickDrinks()" class="text-xs text-blue-600 hover:underline font-medium"><i class="fa-solid fa-pen-to-square"></i> Beheren</button>
+                </div>
+                
+                <!-- Dynamische Snelle Drink Knoppen -->
+                <div id="quick-drinks-grid" class="grid grid-cols-2 gap-3">
+                    <!-- Wordt via JS ingeladen -->
                 </div>
 
-                <!-- Aangepaste invoer drinken -->
+                <!-- Aangepaste invoer drinken (alleen naam en ml) -->
                 <div class="border-t border-slate-100 pt-4 space-y-3">
                     <h4 class="text-xs font-semibold text-slate-500 uppercase">Aangepast Drinken</h4>
                     <div class="grid grid-cols-2 gap-2">
@@ -136,14 +113,14 @@
                     <i class="fa-solid fa-bolt text-emerald-500"></i> Snelle Eet-toetsen
                 </h3>
                 <div class="grid grid-cols-2 gap-3">
-                    <button onclick="addEntry('food', 'Ontbijt (Brood)', 50, 15, 1.2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
+                    <button onclick="addEntry('food', 'Broodmaaltijd', 50, 15, 1.2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
                         <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bread-slice"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Broodmaaltijd</span>
                             <span class="text-xs text-slate-500">Eiwit & zout</span>
                         </div>
                     </button>
-                    <button onclick="addEntry('food', 'Warm Maaltijd', 150, 30, 2.5)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
+                    <button onclick="addEntry('food', 'Warme Maaltijd', 150, 30, 2.5)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
                         <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-utensils"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Warme Maaltijd</span>
@@ -168,7 +145,7 @@
             </div>
         </div>
 
-        <!-- Dagboek / Logboek -->
+        <!-- Dagboek -->
         <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
             <h3 class="font-semibold text-slate-700 flex items-center gap-2">
                 <i class="fa-solid fa-clock-rotate-left text-slate-400"></i> Registraties Vandaag
@@ -180,11 +157,30 @@
 
     </main>
 
+    <!-- Beheer Snelle Drinkknoppen Modal -->
+    <div id="quick-drinks-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-xl">
+            <div class="flex justify-between items-center">
+                <h3 class="font-bold text-slate-800 text-lg">Snelle Drinktoetsen Beheren</h3>
+                <button onclick="closeManageQuickDrinks()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="quick-drinks-manage-list" class="space-y-2 max-h-48 overflow-y-auto divide-y divide-slate-100">
+                <!-- Wordt gevuld via JS -->
+            </div>
+            <div class="border-t pt-3 space-y-2">
+                <h4 class="text-xs font-semibold text-slate-500 uppercase">Nieuwe Snelle Toets</h4>
+                <input type="text" id="new-qdrink-name" placeholder="Naam (bijv. Kopje Bouillon)" class="w-full p-2 rounded-lg border border-slate-200 text-sm">
+                <input type="number" id="new-qdrink-amount" placeholder="Hoeveelheid (ml)" class="w-full p-2 rounded-lg border border-slate-200 text-sm">
+                <button onclick="addQuickDrinkOption()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg transition">Toevoegen aan Snelle Keuzes</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Instellingen Modal -->
     <div id="settings-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-xl">
             <div class="flex justify-between items-center">
-                <h3 class="font-bold text-slate-800 text-lg">Instellingen & Doelen</h3>
+                <h3 class="font-bold text-slate-800 text-lg">Doelen Instellen</h3>
                 <button onclick="closeSettings()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-3">
@@ -207,19 +203,23 @@
         </div>
     </div>
 
-    <!-- JavaScript Logica gekoppeld aan de nieuwe Google Apps Script URL -->
+    <!-- JavaScript -->
     <script>
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3iRb1rPwzwJ7MoRXASbI_EpJqR94K60eANJYgU4NzO-Inny8Z_e8IZD-uH0EEZGl9lA/exec';
 
         let appData = {
             settings: { fluidLimit: 2000, proteinLimit: 70, saltLimit: 6 },
+            quickDrinks: [
+                { id: 1, name: 'Glas Water', amount: 250, icon: 'fa-glass-water' },
+                { id: 2, name: 'Koffie / Thee', amount: 200, icon: 'fa-mug-hot' },
+                { id: 3, name: 'Frisdrank', amount: 300, icon: 'fa-bottle-water' },
+                { id: 4, name: 'Glas Melk', amount: 200, icon: 'fa-glass-water' }
+            ],
             entries: []
         };
 
-        // Init datum in header
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // Tabs wisselen
         function switchTab(tab) {
             const drinkTab = document.getElementById('tab-content-drink');
             const foodTab = document.getElementById('tab-content-food');
@@ -239,7 +239,6 @@
             }
         }
 
-        // Gegevens ophalen vanuit Google Sheets
         async function loadFromGoogle() {
             try {
                 document.getElementById('sync-text').innerText = "Laden...";
@@ -257,7 +256,6 @@
             }
         }
 
-        // Actie doorsturen naar Google Sheets (POST)
         async function sendToGoogle(payload) {
             try {
                 document.getElementById('sync-text').innerText = "Opslaan...";
@@ -272,7 +270,20 @@
             }
         }
 
-        // Toevoegen item
+        // Rendert de snelle drinkknoppen op het scherm
+        function renderQuickDrinks() {
+            const grid = document.getElementById('quick-drinks-grid');
+            grid.innerHTML = appData.quickDrinks.map(q => `
+                <button onclick="addEntry('drink', '${q.name}', ${q.amount}, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
+                    <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid ${q.icon || 'fa-glass-water'}"></i></span>
+                    <div>
+                        <span class="block font-semibold text-sm text-slate-800">${q.name}</span>
+                        <span class="text-xs text-slate-500">${q.amount} ml</span>
+                    </div>
+                </button>
+            `).join('');
+        }
+
         function addEntry(type, name, fluid, protein, salt) {
             const entry = {
                 action: 'saveEntry',
@@ -297,7 +308,6 @@
             addEntry('drink', name, amount, 0, 0);
             document.getElementById('custom-drink-name').value = '';
             document.getElementById('custom-drink-amount').value = '';
-            switchTab('drink');
         }
 
         function addCustomFood() {
@@ -319,8 +329,42 @@
             sendToGoogle({ action: 'deleteEntry', id: id });
         }
 
-        // Rendert de UI en berekent totalen voor vandaag
+        // Beheren Snelle Keuzes Modals
+        function openManageQuickDrinks() {
+            const list = document.getElementById('quick-drinks-manage-list');
+            list.innerHTML = appData.quickDrinks.map(q => `
+                <div class="py-2 flex justify-between items-center text-sm">
+                    <span>${q.name} (${q.amount} ml)</span>
+                    <button onclick="removeQuickDrink(${q.id})" class="text-red-500 hover:text-red-700 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i> Verwijderen</button>
+                </div>
+            `).join('');
+            document.getElementById('quick-drinks-modal').classList.remove('hidden');
+        }
+
+        function closeManageQuickDrinks() {
+            document.getElementById('quick-drinks-modal').classList.add('hidden');
+        }
+
+        function addQuickDrinkOption() {
+            const name = document.getElementById('new-qdrink-name').value;
+            const amount = document.getElementById('new-qdrink-amount').value;
+            if(!name || !amount) return alert('Vul naam en hoeveelheid in.');
+            
+            appData.quickDrinks.push({ id: Date.now(), name: name, amount: Number(amount), icon: 'fa-glass-water' });
+            document.getElementById('new-qdrink-name').value = '';
+            document.getElementById('new-qdrink-amount').value = '';
+            renderQuickDrinks();
+            openManageQuickDrinks();
+        }
+
+        function removeQuickDrink(id) {
+            appData.quickDrinks = appData.quickDrinks.filter(q => q.id !== id);
+            renderQuickDrinks();
+            openManageQuickDrinks();
+        }
+
         function render() {
+            renderQuickDrinks();
             let totalFluid = 0, totalProtein = 0, totalSalt = 0;
             const listEl = document.getElementById('entries-list');
             const todayEntries = appData.entries; 
@@ -355,7 +399,6 @@
             document.getElementById('summary-salt').innerText = totalSalt.toFixed(1) + ' g';
             document.getElementById('summary-fluid-limit').innerText = `max ${appData.settings.fluidLimit} ml`;
 
-            // Kleurwaarschuwing vocht
             const fluidEl = document.getElementById('summary-fluid');
             if (totalFluid > appData.settings.fluidLimit) {
                 fluidEl.className = "text-lg font-bold text-red-600";
@@ -366,7 +409,6 @@
             }
         }
 
-        // Instellingen dialoog
         function openSettings() {
             document.getElementById('setting-fluid-limit').value = appData.settings.fluidLimit;
             document.getElementById('setting-protein-limit').value = appData.settings.proteinLimit;
@@ -387,7 +429,6 @@
             sendToGoogle({ action: 'saveSettings', settings: appData.settings });
         }
 
-        // Bij opstarten direct data ophalen uit Google Sheets
         loadFromGoogle();
     </script>
 </body>
