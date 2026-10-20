@@ -27,17 +27,17 @@
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-utensils">​</i> Eten & Drinken
+                    <i class="fa-solid fa-utensils"></i> Eten & Drinken
                 </h1>
                 <p id="current-date" class="text-xs text-blue-100"></p>
             </div>
             <div class="flex items-center gap-2">
                 <!-- Google Sync Status -->
-                <button onclick="syncWithGoogle()" id="sync-btn" class="bg-white/20 hover:bg-white/30 text-white text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 transition">
-                    <i class="fa-brands fa-google text-sm">​</i> <span id="sync-text">Google Opslag</span>
+                <button onclick="loadFromGoogle()" id="sync-btn" class="bg-white/20 hover:bg-white/30 text-white text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                    <i class="fa-brands fa-google text-sm"></i> <span id="sync-text">Google Gekoppeld</span>
                 </button>
                 <button onclick="openSettings()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition">
-                    <i class="fa-solid fa-gear">​</i>
+                    <i class="fa-solid fa-gear"></i>
                 </button>
             </div>
         </div>
@@ -71,10 +71,10 @@
         <!-- Tabbladen Navigatie -->
         <div class="flex bg-slate-200 p-1 rounded-xl">
             <button onclick="switchTab('drink')" id="tab-btn-drink" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition bg-white text-blue-600 shadow-sm flex items-center justify-center gap-2">
-                <i class="fa-solid fa-droplet">​</i> Drinken
+                <i class="fa-solid fa-droplet"></i> Drinken
             </button>
             <button onclick="switchTab('food')" id="tab-btn-food" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition text-slate-600 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-bowl-food">​</i> Eten
+                <i class="fa-solid fa-bowl-food"></i> Eten
             </button>
         </div>
 
@@ -82,32 +82,32 @@
         <div id="tab-content-drink" class="space-y-4">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4">
                 <h3 class="font-semibold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-blue-500">​</i> Snelle Drink-toetsen
+                    <i class="fa-solid fa-bolt text-blue-500"></i> Snelle Drink-toetsen
                 </h3>
                 <div class="grid grid-cols-2 gap-3">
                     <button onclick="addEntry('drink', 'Water', 250, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-glass-water">​</i></span>
+                        <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-glass-water"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Glas Water</span>
                             <span class="text-xs text-slate-500">250 ml</span>
                         </div>
                     </button>
                     <button onclick="addEntry('drink', 'Koffie / Thee', 200, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-lg"><i class="fa-solid fa-mug-hot">​</i></span>
+                        <span class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-lg"><i class="fa-solid fa-mug-hot"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Koffie / Thee</span>
                             <span class="text-xs text-slate-500">200 ml</span>
                         </div>
                     </button>
                     <button onclick="addEntry('drink', 'Frisdrank', 300, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bottle-water">​</i></span>
+                        <span class="w-10 h-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bottle-water"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Frisdrank</span>
                             <span class="text-xs text-slate-500">300 ml</span>
                         </div>
                     </button>
-                    <button onclick="addEntry('drink', 'Soep / Bouillon', 250, 1.5, 2) " class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bowl-food">​</i></span>
+                    <button onclick="addEntry('drink', 'Soep / Bouillon', 250, 1.5, 2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bowl-food"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Soep</span>
                             <span class="text-xs text-slate-500">250 ml (+zout)</span>
@@ -133,18 +133,18 @@
         <div id="tab-content-food" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4">
                 <h3 class="font-semibold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-emerald-500">​</i> Snelle Eet-toetsen
+                    <i class="fa-solid fa-bolt text-emerald-500"></i> Snelle Eet-toetsen
                 </h3>
                 <div class="grid grid-cols-2 gap-3">
                     <button onclick="addEntry('food', 'Ontbijt (Brood)', 50, 15, 1.2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bread-slice">​</i></span>
+                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bread-slice"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Broodmaaltijd</span>
                             <span class="text-xs text-slate-500">Eiwit & zout</span>
                         </div>
                     </button>
                     <button onclick="addEntry('food', 'Warm Maaltijd', 150, 30, 2.5)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-utensils">​</i></span>
+                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-utensils"></i></span>
                         <div>
                             <span class="block font-semibold text-sm text-slate-800">Warme Maaltijd</span>
                             <span class="text-xs text-slate-500">Uitgebreid</span>
@@ -171,11 +171,10 @@
         <!-- Dagboek / Logboek -->
         <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
             <h3 class="font-semibold text-slate-700 flex items-center gap-2">
-                <i class="fa-solid fa-clock-rotate-left text-slate-400">​</i> Registraties Vandaag
+                <i class="fa-solid fa-clock-rotate-left text-slate-400"></i> Registraties Vandaag
             </h3>
             <div id="entries-list" class="divide-y divide-slate-100 max-h-60 overflow-y-auto">
-                <!-- Dynamische lijst -->
-                <p class="text-sm text-slate-400 text-center py-4">Nog geen invoer vandaag.</p>
+                <p class="text-sm text-slate-400 text-center py-4">Gegevens laden...</p>
             </div>
         </section>
 
@@ -186,7 +185,7 @@
         <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-xl">
             <div class="flex justify-between items-center">
                 <h3 class="font-bold text-slate-800 text-lg">Instellingen & Doelen</h3>
-                <button onclick="closeSettings()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg">​</i></button>
+                <button onclick="closeSettings()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-3">
                 <div>
@@ -208,8 +207,10 @@
         </div>
     </div>
 
-    <!-- JavaScript Logica -->
+    <!-- JavaScript Logica gekoppeld aan jouw Google Apps Script -->
     <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeVrAwLaZ1hFRBidjiAu3Ypxzk0E7JAfUF1SpEcDqlSAEZoFoDdKUaYh3FYyBEMXis/exec';
+
         let appData = {
             settings: { fluidLimit: 2000, proteinLimit: 70, saltLimit: 6 },
             entries: []
@@ -238,19 +239,55 @@
             }
         }
 
+        // Gegevens ophalen vanuit Google Sheets
+        async function loadFromGoogle() {
+            try {
+                document.getElementById('sync-text').innerText = "Laden...";
+                let response = await fetch(GOOGLE_SCRIPT_URL);
+                let data = await response.json();
+                if(data) {
+                    if(data.entries) appData.entries = data.entries;
+                    if(data.settings) appData.settings = data.settings;
+                    render();
+                    document.getElementById('sync-text').innerText = "Google Gekoppeld";
+                }
+            } catch (e) {
+                console.error("Fout bij laden van Google:", e);
+                document.getElementById('sync-text').innerText = "Sync Fout";
+            }
+        }
+
+        // Actie doorsturen naar Google Sheets (POST)
+        async function sendToGoogle(payload) {
+            try {
+                document.getElementById('sync-text').innerText = "Opslaan...";
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                document.getElementById('sync-text').innerText = "Google Gekoppeld";
+            } catch (e) {
+                console.error("Fout bij opslaan in Google:", e);
+                document.getElementById('sync-text').innerText = "Sync Mislukt";
+            }
+        }
+
         // Toevoegen item
         function addEntry(type, name, fluid, protein, salt) {
             const entry = {
+                action: 'saveEntry',
                 id: Date.now(),
-                type: type, // 'drink' of 'food'
+                type: type,
                 name: name,
                 fluid: Number(fluid) || 0,
                 protein: Number(protein) || 0,
                 salt: Number(salt) || 0,
-                time: new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })
+                time: new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }),
+                date: new Date().toLocaleDateString('nl-NL')
             };
             appData.entries.unshift(entry);
-            saveAndRender();
+            render();
+            sendToGoogle(entry);
         }
 
         function addCustomDrink() {
@@ -278,23 +315,23 @@
 
         function deleteEntry(id) {
             appData.entries = appData.entries.filter(e => e.id !== id);
-            saveAndRender();
-        }
-
-        // Opslaan en verversen
-        function saveAndRender() {
-            localStorage.setItem('eten_drinken_data', JSON.stringify(appData));
             render();
+            sendToGoogle({ action: 'deleteEntry', id: id });
         }
 
+        // Rendert de UI en berekent totalen voor vandaag
         function render() {
             let totalFluid = 0, totalProtein = 0, totalSalt = 0;
             const listEl = document.getElementById('entries-list');
+            const todayStr = new Date().toLocaleDateString('nl-NL');
+
+            // Filter optioneel op vandaag (of laat alles zien)
+            const todayEntries = appData.entries; 
             
-            if (appData.entries.length === 0) {
-                listEl.innerHTML = `<p class="text-sm text-slate-400 text-center py-4">Nog geen invoer vandaag.</p>`;
+            if (todayEntries.length === 0) {
+                listEl.innerHTML = `<p class="text-sm text-slate-400 text-center py-4">Nog geen invoer.</p>`;
             } else {
-                listEl.innerHTML = appData.entries.map(e => `
+                listEl.innerHTML = todayEntries.map(e => `
                     <div class="py-2.5 flex justify-between items-center text-sm">
                         <div class="flex items-center gap-3">
                             <span class="w-8 h-8 rounded-full ${e.type === 'drink' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'} flex items-center justify-center text-xs font-bold">
@@ -302,7 +339,7 @@
                             </span>
                             <div>
                                 <span class="font-medium text-slate-800 block">${e.name}</span>
-                                <span class="text-xs text-slate-400">${e.time} ${e.fluid ? '• ' + e.fluid + ' ml' : ''} ${e.protein ? '• ' + e.protein + 'g eiwit' : ''} ${e.salt ? '• ' + e.salt + 'g zout' : ''}</span>
+                                <span class="text-xs text-slate-400">${e.time} (${e.date || ''}) ${e.fluid ? '• ' + e.fluid + ' ml' : ''} ${e.protein ? '• ' + e.protein + 'g eiwit' : ''} ${e.salt ? '• ' + e.salt + 'g zout' : ''}</span>
                             </div>
                         </div>
                         <button onclick="deleteEntry(${e.id})" class="text-slate-300 hover:text-red-500 transition px-2 py-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
@@ -310,10 +347,10 @@
                 `).join('');
             }
 
-            appData.entries.forEach(e => {
-                totalFluid += e.fluid;
-                totalProtein += e.protein;
-                totalSalt += e.salt;
+            todayEntries.forEach(e => {
+                totalFluid += Number(e.fluid) || 0;
+                totalProtein += Number(e.protein) || 0;
+                totalSalt += Number(e.salt) || 0;
             });
 
             document.getElementById('summary-fluid').innerText = totalFluid + ' ml';
@@ -348,26 +385,13 @@
             appData.settings.fluidLimit = Number(document.getElementById('setting-fluid-limit').value) || 2000;
             appData.settings.proteinLimit = Number(document.getElementById('setting-protein-limit').value) || 70;
             appData.settings.saltLimit = Number(document.getElementById('setting-salt-limit').value) || 6;
-            saveAndRender();
+            render();
             closeSettings();
+            sendToGoogle({ action: 'saveSettings', settings: appData.settings });
         }
 
-        // Google Opslag simulatie (of koppeling via Google API indien gewenst)
-        function syncWithGoogle() {
-            const btnText = document.getElementById('sync-text');
-            btnText.innerText = "Synchroniseren...";
-            setTimeout(() => {
-                btnText.innerText = "Gekoppeld met Google";
-                setTimeout(() => { btnText.innerText = "Google Opslag"; }, 3000);
-            }, 1000);
-        }
-
-        // Init laden
-        const saved = localStorage.getItem('eten_drinken_data');
-        if (saved) {
-            appData = JSON.parse(saved);
-        }
-        render();
+        // Bij opstarten direct data ophalen uit Google Sheets
+        loadFromGoogle();
     </script>
 </body>
 </html>
