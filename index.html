@@ -34,7 +34,7 @@
             <div class="flex items-center gap-2">
                 <!-- Google Sync Status -->
                 <button onclick="loadFromGoogle()" id="sync-btn" class="bg-white/20 hover:bg-white/30 text-white text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 transition">
-                    <i class="fa-brands fa-google text-sm"></i> <span id="sync-text">Google Gekoppeld</span>
+                    <i class="fa-brands fa-google text-sm"></i> <span id="sync-text">Laden...</span>
                 </button>
                 <button onclick="openSettings()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition">
                     <i class="fa-solid fa-gear"></i>
@@ -207,9 +207,9 @@
         </div>
     </div>
 
-    <!-- JavaScript Logica gekoppeld aan jouw Google Apps Script -->
+    <!-- JavaScript Logica gekoppeld aan de nieuwe Google Apps Script URL -->
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeVrAwLaZ1hFRBidjiAu3Ypxzk0E7JAfUF1SpEcDqlSAEZoFoDdKUaYh3FYyBEMXis/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3iRb1rPwzwJ7MoRXASbI_EpJqR94K60eANJYgU4NzO-Inny8Z_e8IZD-uH0EEZGl9lA/exec';
 
         let appData = {
             settings: { fluidLimit: 2000, proteinLimit: 70, saltLimit: 6 },
@@ -323,9 +323,6 @@
         function render() {
             let totalFluid = 0, totalProtein = 0, totalSalt = 0;
             const listEl = document.getElementById('entries-list');
-            const todayStr = new Date().toLocaleDateString('nl-NL');
-
-            // Filter optioneel op vandaag (of laat alles zien)
             const todayEntries = appData.entries; 
             
             if (todayEntries.length === 0) {
