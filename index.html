@@ -87,12 +87,8 @@
                     <button onclick="openManageQuickDrinks()" class="text-xs text-blue-600 hover:underline font-medium"><i class="fa-solid fa-pen-to-square"></i> Beheren</button>
                 </div>
                 
-                <!-- Dynamische Snelle Drink Knoppen -->
-                <div id="quick-drinks-grid" class="grid grid-cols-2 gap-3">
-                    <!-- Wordt via JS ingeladen -->
-                </div>
+                <div id="quick-drinks-grid" class="grid grid-cols-2 gap-3"></div>
 
-                <!-- Aangepaste invoer drinken (alleen naam en ml) -->
                 <div class="border-t border-slate-100 pt-4 space-y-3">
                     <h4 class="text-xs font-semibold text-slate-500 uppercase">Aangepast Drinken</h4>
                     <div class="grid grid-cols-2 gap-2">
@@ -109,27 +105,15 @@
         <!-- TAB 2: ETEN -->
         <div id="tab-content-food" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4">
-                <h3 class="font-semibold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-emerald-500"></i> Snelle Eet-toetsen
-                </h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="addEntry('food', 'Broodmaaltijd', 50, 15, 1.2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bread-slice"></i></span>
-                        <div>
-                            <span class="block font-semibold text-sm text-slate-800">Broodmaaltijd</span>
-                            <span class="text-xs text-slate-500">Eiwit & zout</span>
-                        </div>
-                    </button>
-                    <button onclick="addEntry('food', 'Warme Maaltijd', 150, 30, 2.5)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
-                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-utensils"></i></span>
-                        <div>
-                            <span class="block font-semibold text-sm text-slate-800">Warme Maaltijd</span>
-                            <span class="text-xs text-slate-500">Uitgebreid</span>
-                        </div>
-                    </button>
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-emerald-500"></i> Snelle Eet-toetsen
+                    </h3>
+                    <button onclick="openManageQuickFoods()" class="text-xs text-emerald-600 hover:underline font-medium"><i class="fa-solid fa-pen-to-square"></i> Beheren</button>
                 </div>
 
-                <!-- Aangepaste invoer eten -->
+                <div id="quick-foods-grid" class="grid grid-cols-2 gap-3"></div>
+
                 <div class="border-t border-slate-100 pt-4 space-y-3">
                     <h4 class="text-xs font-semibold text-slate-500 uppercase">Maaltijd / Snack Invoeren</h4>
                     <input type="text" id="custom-food-name" placeholder="Naam maaltijd / snack" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500">
@@ -164,14 +148,33 @@
                 <h3 class="font-bold text-slate-800 text-lg">Snelle Drinktoetsen Beheren</h3>
                 <button onclick="closeManageQuickDrinks()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div id="quick-drinks-manage-list" class="space-y-2 max-h-48 overflow-y-auto divide-y divide-slate-100">
-                <!-- Wordt gevuld via JS -->
-            </div>
+            <div id="quick-drinks-manage-list" class="space-y-2 max-h-48 overflow-y-auto divide-y divide-slate-100"></div>
             <div class="border-t pt-3 space-y-2">
                 <h4 class="text-xs font-semibold text-slate-500 uppercase">Nieuwe Snelle Toets</h4>
                 <input type="text" id="new-qdrink-name" placeholder="Naam (bijv. Kopje Bouillon)" class="w-full p-2 rounded-lg border border-slate-200 text-sm">
                 <input type="number" id="new-qdrink-amount" placeholder="Hoeveelheid (ml)" class="w-full p-2 rounded-lg border border-slate-200 text-sm">
-                <button onclick="addQuickDrinkOption()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg transition">Toevoegen aan Snelle Keuzes</button>
+                <button onclick="addQuickDrinkOption()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg transition">Toevoegen & Opslaan in Google</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Beheer Snelle Eetknoppen Modal -->
+    <div id="quick-foods-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-xl">
+            <div class="flex justify-between items-center">
+                <h3 class="font-bold text-slate-800 text-lg">Snelle Eettoetsen Beheren</h3>
+                <button onclick="closeManageQuickFoods()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="quick-foods-manage-list" class="space-y-2 max-h-48 overflow-y-auto divide-y divide-slate-100"></div>
+            <div class="border-t pt-3 space-y-2">
+                <h4 class="text-xs font-semibold text-slate-500 uppercase">Nieuwe Snelle Eet-Toets</h4>
+                <input type="text" id="new-qfood-name" placeholder="Naam (bijv. Banaan)" class="w-full p-2 rounded-lg border border-slate-200 text-sm">
+                <div class="grid grid-cols-3 gap-2">
+                    <input type="number" id="new-qfood-protein" placeholder="Eiwit (g)" class="p-2 rounded-lg border border-slate-200 text-sm">
+                    <input type="number" id="new-qfood-salt" placeholder="Zout (g)" class="p-2 rounded-lg border border-slate-200 text-sm">
+                    <input type="number" id="new-qfood-fluid" placeholder="Vocht (ml)" class="p-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <button onclick="addQuickFoodOption()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-2 rounded-lg transition">Toevoegen & Opslaan in Google</button>
             </div>
         </div>
     </div>
@@ -210,10 +213,13 @@
         let appData = {
             settings: { fluidLimit: 2000, proteinLimit: 70, saltLimit: 6 },
             quickDrinks: [
-                { id: 1, name: 'Glas Water', amount: 250, icon: 'fa-glass-water' },
-                { id: 2, name: 'Koffie / Thee', amount: 200, icon: 'fa-mug-hot' },
-                { id: 3, name: 'Frisdrank', amount: 300, icon: 'fa-bottle-water' },
-                { id: 4, name: 'Glas Melk', amount: 200, icon: 'fa-glass-water' }
+                { id: 1, name: 'Glas Water', amount: 250 },
+                { id: 2, name: 'Koffie / Thee', amount: 200 },
+                { id: 3, name: 'Frisdrank', amount: 300 }
+            ],
+            quickFoods: [
+                { id: 1, name: 'Broodmaaltijd', fluid: 50, protein: 15, salt: 1.2 },
+                { id: 2, name: 'Warme Maaltijd', fluid: 150, protein: 30, salt: 2.5 }
             ],
             entries: []
         };
@@ -247,6 +253,8 @@
                 if(data) {
                     if(data.entries) appData.entries = data.entries;
                     if(data.settings) appData.settings = data.settings;
+                    if(data.quickDrinks && data.quickDrinks.length > 0) appData.quickDrinks = data.quickDrinks;
+                    if(data.quickFoods && data.quickFoods.length > 0) appData.quickFoods = data.quickFoods;
                     render();
                     document.getElementById('sync-text').innerText = "Google Gekoppeld";
                 }
@@ -270,15 +278,27 @@
             }
         }
 
-        // Rendert de snelle drinkknoppen op het scherm
         function renderQuickDrinks() {
             const grid = document.getElementById('quick-drinks-grid');
             grid.innerHTML = appData.quickDrinks.map(q => `
                 <button onclick="addEntry('drink', '${q.name}', ${q.amount}, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
-                    <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid ${q.icon || 'fa-glass-water'}"></i></span>
+                    <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-glass-water"></i></span>
                     <div>
                         <span class="block font-semibold text-sm text-slate-800">${q.name}</span>
                         <span class="text-xs text-slate-500">${q.amount} ml</span>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function renderQuickFoods() {
+            const grid = document.getElementById('quick-foods-grid');
+            grid.innerHTML = appData.quickFoods.map(q => `
+                <button onclick="addEntry('food', '${q.name}', ${q.fluid || 0}, ${q.protein || 0}, ${q.salt || 0})" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
+                    <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-utensils"></i></span>
+                    <div>
+                        <span class="block font-semibold text-sm text-slate-800">${q.name}</span>
+                        <span class="text-xs text-slate-500">${q.protein ? q.protein + 'g eiwit' : ''} ${q.salt ? '• ' + q.salt + 'g zout' : ''}</span>
                     </div>
                 </button>
             `).join('');
@@ -329,7 +349,7 @@
             sendToGoogle({ action: 'deleteEntry', id: id });
         }
 
-        // Beheren Snelle Keuzes Modals
+        // Beheren Drink-sneltoetsen via Google
         function openManageQuickDrinks() {
             const list = document.getElementById('quick-drinks-manage-list');
             list.innerHTML = appData.quickDrinks.map(q => `
@@ -350,21 +370,74 @@
             const amount = document.getElementById('new-qdrink-amount').value;
             if(!name || !amount) return alert('Vul naam en hoeveelheid in.');
             
-            appData.quickDrinks.push({ id: Date.now(), name: name, amount: Number(amount), icon: 'fa-glass-water' });
+            appData.quickDrinks.push({ id: Date.now(), name: name, amount: Number(amount) });
             document.getElementById('new-qdrink-name').value = '';
             document.getElementById('new-qdrink-amount').value = '';
             renderQuickDrinks();
             openManageQuickDrinks();
+            sendToGoogle({ action: 'saveQuickDrinks', quickDrinks: appData.quickDrinks });
         }
 
         function removeQuickDrink(id) {
             appData.quickDrinks = appData.quickDrinks.filter(q => q.id !== id);
             renderQuickDrinks();
             openManageQuickDrinks();
+            sendToGoogle({ action: 'saveQuickDrinks', quickDrinks: appData.quickDrinks });
+        }
+
+        // Beheren Eet-sneltoetsen via Google
+        function openManageQuickFoods() {
+            const list = document.getElementById('quick-foods-manage-list');
+            list.innerHTML = appData.quickFoods.map(q => `
+                <div class="py-2 flex justify-between items-center text-sm">
+                    <div>
+                        <span class="font-medium block">${q.name}</span>
+                        <span class="text-xs text-slate-400">${q.protein || 0}g eiwit • ${q.salt || 0}g zout • ${q.fluid || 0}ml vocht</span>
+                    </div>
+                    <button onclick="removeQuickFood(${q.id})" class="text-red-500 hover:text-red-700 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i> Verwijderen</button>
+                </div>
+            `).join('');
+            document.getElementById('quick-foods-modal').classList.remove('hidden');
+        }
+
+        function closeManageQuickFoods() {
+            document.getElementById('quick-foods-modal').classList.add('hidden');
+        }
+
+        function addQuickFoodOption() {
+            const name = document.getElementById('new-qfood-name').value;
+            const protein = document.getElementById('new-qfood-protein').value || 0;
+            const salt = document.getElementById('new-qfood-salt').value || 0;
+            const fluid = document.getElementById('new-qfood-fluid').value || 0;
+            if(!name) return alert('Vul tenminste een naam in.');
+
+            appData.quickFoods.push({
+                id: Date.now(),
+                name: name,
+                protein: Number(protein),
+                salt: Number(salt),
+                fluid: Number(fluid)
+            });
+
+            document.getElementById('new-qfood-name').value = '';
+            document.getElementById('new-qfood-protein').value = '';
+            document.getElementById('new-qfood-salt').value = '';
+            document.getElementById('new-qfood-fluid').value = '';
+            renderQuickFoods();
+            openManageQuickFoods();
+            sendToGoogle({ action: 'saveQuickFoods', quickFoods: appData.quickFoods });
+        }
+
+        function removeQuickFood(id) {
+            appData.quickFoods = appData.quickFoods.filter(q => q.id !== id);
+            renderQuickFoods();
+            openManageQuickFoods();
+            sendToGoogle({ action: 'saveQuickFoods', quickFoods: appData.quickFoods });
         }
 
         function render() {
             renderQuickDrinks();
+            renderQuickFoods();
             let totalFluid = 0, totalProtein = 0, totalSalt = 0;
             const listEl = document.getElementById('entries-list');
             const todayEntries = appData.entries; 
