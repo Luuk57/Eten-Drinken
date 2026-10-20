@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- html2pdf bibliotheek voor PDF export -->
+    <!-- html2pdf bibliotheek -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
             </div>
         </section>
 
-        <!-- Tabbladen Navigatie (3 Tabs) -->
+        <!-- Tabbladen Navigatie -->
         <div class="flex bg-slate-200 p-1 rounded-xl">
             <button onclick="switchTab('drink')" id="tab-btn-drink" class="flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white text-blue-600 shadow-sm flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-droplet"></i> Drinken
@@ -150,7 +150,7 @@
                         </select>
                     </div>
 
-                    <!-- PDF Export Container (A4 styling voor nette PDF afdruk) -->
+                    <!-- PDF Export Container -->
                     <div id="pdf-export-area" class="bg-white p-5 rounded-xl border border-slate-200 space-y-4 text-slate-800">
                         <div class="flex justify-between items-center border-b border-slate-200 pb-3">
                             <div>
@@ -195,7 +195,7 @@
             </div>
         </div>
 
-        <!-- Dagboek (Onderaan) -->
+        <!-- Dagboek -->
         <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
             <h3 class="font-semibold text-slate-700 flex items-center gap-2">
                 <i class="fa-solid fa-clock-rotate-left text-slate-400"></i> Registraties Vandaag
@@ -207,7 +207,7 @@
 
     </main>
 
-    <!-- Modals voor Beheer & Instellingen -->
+    <!-- Modals -->
     <div id="quick-drinks-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-xl">
             <div class="flex justify-between items-center">
@@ -216,8 +216,8 @@
             </div>
             <div id="quick-drinks-manage-list" class="space-y-2 max-h-48 overflow-y-auto divide-y divide-slate-100"></div>
             <div class="border-t pt-3 space-y-2">
-                <input type="text" id="new-qdrink-name" placeholder="Naam (bijv. Bouillon)" class="w-full p-2 rounded-lg border text-sm">
-                <input type="number" id="new-qdrink-amount" placeholder="Hoeveelheid (ml)" class="w-full p-2 rounded-lg border text-sm">
+                <input type="text" id="new-qdrink-name" placeholder="Naam" class="w-full p-2 rounded-lg border text-sm">
+                <input type="number" id="new-qdrink-amount" placeholder="ml" class="w-full p-2 rounded-lg border text-sm">
                 <button onclick="addQuickDrinkOption()" class="w-full bg-blue-600 text-white text-sm py-2 rounded-lg">Toevoegen</button>
             </div>
         </div>
@@ -268,7 +268,6 @@
             entries: []
         };
 
-        // Korte datumnotatie helpers
         function getShortDateStr(dateObj = new Date()) {
             const d = String(dateObj.getDate()).padStart(2, '0');
             const m = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -394,7 +393,6 @@
             sendToGoogle({ action: 'deleteEntry', id: id });
         }
 
-        // Overzicht & PDF Filter logica
         function updateOverviewData() {
             const period = document.getElementById('report-period').value;
             const todayStr = getShortDateStr();
@@ -418,7 +416,7 @@
 
             const listEl = document.getElementById('report-items-list');
             if (filtered.length === 0) {
-                listEl.innerHTML = `<p class="text-slate-400 py-2 text-center">Geen gegevens in deze periode.</p>`;
+                listEl.innerHTML = `<p class="text-slate-400 py-2 text-center">Gegevens laden...</p>`;
             } else {
                 listEl.innerHTML = filtered.map(e => `
                     <div class="py-1.5 border-b border-slate-100 flex justify-between items-center text-xs">
@@ -426,7 +424,7 @@
                             <span class="font-medium text-slate-800">${e.name}</span>
                             <span class="text-[10px] text-slate-400 block">${e.date || ''} • ${e.time || ''}</span>
                         </div>
-                        <div class="text-right text-slate-600 font-mono">
+                        <div class="text-right text-slate-600">
                             ${e.fluid ? e.fluid + 'ml ' : ''}${e.protein ? e.protein + 'g eiwit ' : ''}${e.salt ? e.salt + 'g zout' : ''}
                         </div>
                     </div>
@@ -435,21 +433,20 @@
         }
 
         function generatePDF() {
-            updateOverviewData(); // Zorgt dat de nieuwste gegevens in de PDF gezet worden
+            updateOverviewData();
             const element = document.getElementById('pdf-export-area');
             
             const opt = {
                 margin:       8,
-                filename:     `Innahme_Rapport_${getShortDateStr()}.pdf`,
+                filename:     `Inname_Rapport_${getShortDateStr()}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
             html2pdf().set(opt).from(element).save();
         }
 
-        // Modals sneltoetsen beheer
         function openManageQuickDrinks() {
             document.getElementById('quick-drinks-manage-list').innerHTML = appData.quickDrinks.map(q => `
                 <div class="py-1.5 flex justify-between text-sm"><span>${q.name} (${q.amount} ml)</span><button onclick="removeQuickDrink(${q.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div>
