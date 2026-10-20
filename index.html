@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eten & Drinken Monitor</title>
+    <!-- Tailwind CSS voor modern design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome voor iconen -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-24">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-utensils">​</i> Eten & Drinken
+                </h1>
+                <p id="current-date" class="text-xs text-blue-100"></p>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Google Sync Status -->
+                <button onclick="syncWithGoogle()" id="sync-btn" class="bg-white/20 hover:bg-white/30 text-white text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                    <i class="fa-brands fa-google text-sm">​</i> <span id="sync-text">Google Opslag</span>
+                </button>
+                <button onclick="openSettings()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition">
+                    <i class="fa-solid fa-gear">​</i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-md mx-auto p-4 space-y-6">
+
+        <!-- Dagelijks Overzicht / Samenvatting -->
+        <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+            <h2 class="text-sm font-semibold text-slate-500 mb-3 uppercase tracking-wider">Voortgang Vandaag</h2>
+            <div class="grid grid-cols-3 gap-3 text-center">
+                <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-100">
+                    <span class="block text-xs text-blue-600 font-medium">Vocht</span>
+                    <span id="summary-fluid" class="text-lg font-bold text-blue-900">0 ml</span>
+                    <span id="summary-fluid-limit" class="block text-[10px] text-slate-400">max 2000 ml</span>
+                </div>
+                <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                    <span class="block text-xs text-emerald-600 font-medium">Eiwit</span>
+                    <span id="summary-protein" class="text-lg font-bold text-emerald-900">0 g</span>
+                    <span class="block text-[10px] text-slate-400">doel 70 g</span>
+                </div>
+                <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-100">
+                    <span class="block text-xs text-amber-600 font-medium">Zout</span>
+                    <span id="summary-salt" class="text-lg font-bold text-amber-900">0 g</span>
+                    <span class="block text-[10px] text-slate-400">max 6 g</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabbladen Navigatie -->
+        <div class="flex bg-slate-200 p-1 rounded-xl">
+            <button onclick="switchTab('drink')" id="tab-btn-drink" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition bg-white text-blue-600 shadow-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-droplet">​</i> Drinken
+            </button>
+            <button onclick="switchTab('food')" id="tab-btn-food" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition text-slate-600 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bowl-food">​</i> Eten
+            </button>
+        </div>
+
+        <!-- TAB 1: DRINKEN -->
+        <div id="tab-content-drink" class="space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+                <h3 class="font-semibold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-blue-500">​</i> Snelle Drink-toetsen
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="addEntry('drink', 'Water', 250, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-glass-water">​</i></span>
+                        <div>
+                            <span class="block font-semibold text-sm text-slate-800">Glas Water</span>
+                            <span class="text-xs text-slate-500">250 ml</span>
+                        </div>
+                    </button>
+                    <button onclick="addEntry('drink', 'Koffie / Thee', 200, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-lg"><i class="fa-solid fa-mug-hot">​</i></span>
+                        <div>
+                            <span class="block font-semibold text-sm text-slate-800">Koffie / Thee</span>
+                            <span class="text-xs text-slate-500">200 ml</span>
+                        </div>
+                    </button>
+                    <button onclick="addEntry('drink', 'Frisdrank', 300, 0, 0)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bottle-water">​</i></span>
+                        <div>
+                            <span class="block font-semibold text-sm text-slate-800">Frisdrank</span>
+                            <span class="text-xs text-slate-500">300 ml</span>
+                        </div>
+                    </button>
+                    <button onclick="addEntry('drink', 'Soep / Bouillon', 250, 1.5, 2) " class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bowl-food">​</i></span>
+                        <div>
+                            <span class="block font-semibold text-sm text-slate-800">Soep</span>
+                            <span class="text-xs text-slate-500">250 ml (+zout)</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Aangepaste invoer drinken -->
+                <div class="border-t border-slate-100 pt-4 space-y-3">
+                    <h4 class="text-xs font-semibold text-slate-500 uppercase">Aangepast Drinken</h4>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="custom-drink-name" placeholder="Naam (bijv. Melk)" class="p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-500">
+                        <input type="number" id="custom-drink-amount" placeholder="Hoeveelheid (ml)" class="p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button onclick="addCustomDrink()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl text-sm transition">
+                        Drank Toevoegen
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ETEN -->
+        <div id="tab-content-food" class="space-y-4 hidden">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+                <h3 class="font-semibold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-emerald-500">​</i> Snelle Eet-toetsen
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="addEntry('food', 'Ontbijt (Brood)', 50, 15, 1.2)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bread-slice">​</i></span>
+                        <div>
+                            <span class="block font-semibold text-sm text-slate-800">Broodmaaltijd</span>
+                            <span class="text-xs text-slate-500">Eiwit & zout</span>
+                        </div>
+                    </button>
+                    <button onclick="addEntry('food', 'Warm Maaltijd', 150, 30, 2.5)" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition text-left">
+                        <span class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-utensils">​</i></span>
+                        <div>
+                            <span class="block font-semibold text-sm text-slate-800">Warme Maaltijd</span>
+                            <span class="text-xs text-slate-500">Uitgebreid</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Aangepaste invoer eten -->
+                <div class="border-t border-slate-100 pt-4 space-y-3">
+                    <h4 class="text-xs font-semibold text-slate-500 uppercase">Maaltijd / Snack Invoeren</h4>
+                    <input type="text" id="custom-food-name" placeholder="Naam maaltijd / snack" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500">
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="number" id="custom-food-protein" placeholder="Eiwit (g)" class="p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500">
+                        <input type="number" id="custom-food-salt" placeholder="Zout (g)" class="p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500">
+                        <input type="number" id="custom-food-fluid" placeholder="Vocht (ml)" class="p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <button onclick="addCustomFood()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-sm transition">
+                        Eten Toevoegen
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dagboek / Logboek -->
+        <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+            <h3 class="font-semibold text-slate-700 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-slate-400">​</i> Registraties Vandaag
+            </h3>
+            <div id="entries-list" class="divide-y divide-slate-100 max-h-60 overflow-y-auto">
+                <!-- Dynamische lijst -->
+                <p class="text-sm text-slate-400 text-center py-4">Nog geen invoer vandaag.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Instellingen Modal -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-xl">
+            <div class="flex justify-between items-center">
+                <h3 class="font-bold text-slate-800 text-lg">Instellingen & Doelen</h3>
+                <button onclick="closeSettings()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg">​</i></button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Max Vocht (ml)</label>
+                    <input type="number" id="setting-fluid-limit" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Doel Eiwit (g)</label>
+                    <input type="number" id="setting-protein-limit" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Max Zout (g)</label>
+                    <input type="number" id="setting-salt-limit" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+                </div>
+            </div>
+            <button onclick="saveSettings()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl text-sm transition">
+                Opslaan
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logica -->
+    <script>
+        let appData = {
+            settings: { fluidLimit: 2000, proteinLimit: 70, saltLimit: 6 },
+            entries: []
+        };
+
+        // Init datum in header
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
+
+        // Tabs wisselen
+        function switchTab(tab) {
+            const drinkTab = document.getElementById('tab-content-drink');
+            const foodTab = document.getElementById('tab-content-food');
+            const drinkBtn = document.getElementById('tab-btn-drink');
+            const foodBtn = document.getElementById('tab-btn-food');
+
+            if (tab === 'drink') {
+                drinkTab.classList.remove('hidden');
+                foodTab.classList.add('hidden');
+                drinkBtn.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition bg-white text-blue-600 shadow-sm flex items-center justify-center gap-2";
+                foodBtn.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition text-slate-600 flex items-center justify-center gap-2";
+            } else {
+                foodTab.classList.remove('hidden');
+                drinkTab.classList.add('hidden');
+                foodBtn.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition bg-white text-emerald-600 shadow-sm flex items-center justify-center gap-2";
+                drinkBtn.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition text-slate-600 flex items-center justify-center gap-2";
+            }
+        }
+
+        // Toevoegen item
+        function addEntry(type, name, fluid, protein, salt) {
+            const entry = {
+                id: Date.now(),
+                type: type, // 'drink' of 'food'
+                name: name,
+                fluid: Number(fluid) || 0,
+                protein: Number(protein) || 0,
+                salt: Number(salt) || 0,
+                time: new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })
+            };
+            appData.entries.unshift(entry);
+            saveAndRender();
+        }
+
+        function addCustomDrink() {
+            const name = document.getElementById('custom-drink-name').value;
+            const amount = document.getElementById('custom-drink-amount').value;
+            if(!name || !amount) return alert('Vul naam en hoeveelheid in.');
+            addEntry('drink', name, amount, 0, 0);
+            document.getElementById('custom-drink-name').value = '';
+            document.getElementById('custom-drink-amount').value = '';
+            switchTab('drink');
+        }
+
+        function addCustomFood() {
+            const name = document.getElementById('custom-food-name').value;
+            const protein = document.getElementById('custom-food-protein').value || 0;
+            const salt = document.getElementById('custom-food-salt').value || 0;
+            const fluid = document.getElementById('custom-food-fluid').value || 0;
+            if(!name) return alert('Vul tenminste een naam in.');
+            addEntry('food', name, fluid, protein, salt);
+            document.getElementById('custom-food-name').value = '';
+            document.getElementById('custom-food-protein').value = '';
+            document.getElementById('custom-food-salt').value = '';
+            document.getElementById('custom-food-fluid').value = '';
+        }
+
+        function deleteEntry(id) {
+            appData.entries = appData.entries.filter(e => e.id !== id);
+            saveAndRender();
+        }
+
+        // Opslaan en verversen
+        function saveAndRender() {
+            localStorage.setItem('eten_drinken_data', JSON.stringify(appData));
+            render();
+        }
+
+        function render() {
+            let totalFluid = 0, totalProtein = 0, totalSalt = 0;
+            const listEl = document.getElementById('entries-list');
+            
+            if (appData.entries.length === 0) {
+                listEl.innerHTML = `<p class="text-sm text-slate-400 text-center py-4">Nog geen invoer vandaag.</p>`;
+            } else {
+                listEl.innerHTML = appData.entries.map(e => `
+                    <div class="py-2.5 flex justify-between items-center text-sm">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full ${e.type === 'drink' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'} flex items-center justify-center text-xs font-bold">
+                                <i class="fa-solid ${e.type === 'drink' ? 'fa-droplet' : 'fa-bowl-food'}"></i>
+                            </span>
+                            <div>
+                                <span class="font-medium text-slate-800 block">${e.name}</span>
+                                <span class="text-xs text-slate-400">${e.time} ${e.fluid ? '• ' + e.fluid + ' ml' : ''} ${e.protein ? '• ' + e.protein + 'g eiwit' : ''} ${e.salt ? '• ' + e.salt + 'g zout' : ''}</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteEntry(${e.id})" class="text-slate-300 hover:text-red-500 transition px-2 py-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                    </div>
+                `).join('');
+            }
+
+            appData.entries.forEach(e => {
+                totalFluid += e.fluid;
+                totalProtein += e.protein;
+                totalSalt += e.salt;
+            });
+
+            document.getElementById('summary-fluid').innerText = totalFluid + ' ml';
+            document.getElementById('summary-protein').innerText = totalProtein.toFixed(1) + ' g';
+            document.getElementById('summary-salt').innerText = totalSalt.toFixed(1) + ' g';
+            document.getElementById('summary-fluid-limit').innerText = `max ${appData.settings.fluidLimit} ml`;
+
+            // Kleurwaarschuwing vocht
+            const fluidEl = document.getElementById('summary-fluid');
+            if (totalFluid > appData.settings.fluidLimit) {
+                fluidEl.className = "text-lg font-bold text-red-600";
+            } else if (totalFluid > appData.settings.fluidLimit * 0.85) {
+                fluidEl.className = "text-lg font-bold text-amber-600";
+            } else {
+                fluidEl.className = "text-lg font-bold text-blue-900";
+            }
+        }
+
+        // Instellingen dialoog
+        function openSettings() {
+            document.getElementById('setting-fluid-limit').value = appData.settings.fluidLimit;
+            document.getElementById('setting-protein-limit').value = appData.settings.proteinLimit;
+            document.getElementById('setting-salt-limit').value = appData.settings.saltLimit;
+            document.getElementById('settings-modal').classList.remove('hidden');
+        }
+
+        function closeSettings() {
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            appData.settings.fluidLimit = Number(document.getElementById('setting-fluid-limit').value) || 2000;
+            appData.settings.proteinLimit = Number(document.getElementById('setting-protein-limit').value) || 70;
+            appData.settings.saltLimit = Number(document.getElementById('setting-salt-limit').value) || 6;
+            saveAndRender();
+            closeSettings();
+        }
+
+        // Google Opslag simulatie (of koppeling via Google API indien gewenst)
+        function syncWithGoogle() {
+            const btnText = document.getElementById('sync-text');
+            btnText.innerText = "Synchroniseren...";
+            setTimeout(() => {
+                btnText.innerText = "Gekoppeld met Google";
+                setTimeout(() => { btnText.innerText = "Google Opslag"; }, 3000);
+            }, 1000);
+        }
+
+        // Init laden
+        const saved = localStorage.getItem('eten_drinken_data');
+        if (saved) {
+            appData = JSON.parse(saved);
+        }
+        render();
+    </script>
+</body>
+</html>
