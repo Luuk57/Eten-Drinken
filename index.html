@@ -416,7 +416,7 @@
 
             const listEl = document.getElementById('report-items-list');
             if (filtered.length === 0) {
-                listEl.innerHTML = `<p class="text-slate-400 py-2 text-center">Gegevens laden...</p>`;
+                listEl.innerHTML = `<p class="text-slate-400 py-2 text-center">Geen gegevens in deze periode.</p>`;
             } else {
                 listEl.innerHTML = filtered.map(e => `
                     <div class="py-1.5 border-b border-slate-100 flex justify-between items-center text-xs">
